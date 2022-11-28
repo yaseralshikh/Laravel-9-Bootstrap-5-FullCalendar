@@ -19,6 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href='{{ asset('css/main.css') }}' rel='stylesheet' />
 </head>
 
 <body>
@@ -84,6 +85,11 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Scripts -->
+    <script src='{{ asset('js/main.js') }}'></script>
+    <script src='{{ asset('js/locales-all.js') }}'></script>
+    @stack('scripts')
 </body>
 
 </html>
