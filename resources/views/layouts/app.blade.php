@@ -19,7 +19,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href='{{ asset('css/main.css') }}' rel='stylesheet' />
+    <link href='{{ asset('css/main.css') }}' rel='stylesheet'/>
+
+    @stack('styles')
 </head>
 
 <body>
@@ -89,6 +91,7 @@
     <!-- Scripts -->
     <script src='{{ asset('js/main.js') }}'></script>
     <script src='{{ asset('js/locales-all.js') }}'></script>
+    <script src="{{ asset('js/moment.min.js') }}"></script>
     @stack('scripts')
 </body>
 
