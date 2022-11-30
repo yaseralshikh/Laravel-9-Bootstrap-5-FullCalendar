@@ -57,18 +57,18 @@ class HomeController extends Controller
             'user_id' => $request->user_id,
         ]);
 
-        $color = null;
+        // $color = null;
 
-        if($appointment->title == 'Test') {
-            $color = '#924ACE';
-        }
+        // if($appointment->title == 'Test') {
+        //     $color = '#924ACE';
+        // }
 
         return response()->json([
             'id' => $appointment->id,
+            'title' => $appointment->task . '(' . $appointment->user->name . ')',
             'start' => $appointment->start_time,
             'end' => $appointment->finish_time,
-            'title' => $appointment->task,
-            'color' => $color ? $color: '',
+            //'color' => $color ? $color: '',
         ]);
     }
 }

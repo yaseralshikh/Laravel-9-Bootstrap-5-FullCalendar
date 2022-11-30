@@ -71,6 +71,7 @@
                                         <option value="1">One</option>
                                         <option value="2">Two</option>
                                         <option value="3">Three</option>
+                                        <option value="4">fore</option>
                                     </select>
 
                                     @error('semester')
@@ -88,6 +89,7 @@
                                         <option value="1">One</option>
                                         <option value="2">Two</option>
                                         <option value="3">Three</option>
+                                        <option value="4">fore</option>
                                     </select>
 
                                     @error('task')
@@ -135,7 +137,13 @@
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                var initialLocaleCode = 'ar-sa';
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                // var initialLocaleCode = 'ar-sa';
+                var initialLocaleCode = 'en';
                 var localeSelectorEl = document.getElementById('locale-selector');
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -170,10 +178,13 @@
                             var user_id = $('#user_id').val();
                             var semester = $('#semester').val();
                             var task = $('#task').val();
-                            var start_time = moment(start).format('YYYY-MM-DD');
-                            var finish_time = moment(end).format('YYYY-MM-DD');
 
-                            //console.log(user_id);
+                            var start_time = $('#start_time').val();
+                            var finish_time = $('#finish_time').val();
+                            //var start_time = moment(start).format('YYYY-MM-DD HH:mm:ss');
+                            //var finish_time = moment(end).format('YYYY-MM-DD HH:mm:ss');
+
+                            //console.log(user_id, semester, task, start_time, finish_time);
                             $.ajax({
                                 url:"{{ route('store') }}",
                                 type:"POST",
@@ -181,12 +192,12 @@
                                 data:{ user_id, semester, task, start_time, finish_time },
                                 success:function(response)
                                 {
-                                    $('#bookingModal').modal('hide')
-                                    $('#calendar').fullCalendar('renderEvent', {
-                                        'title': response.title,
-                                        'start' : response.start,
-                                        'end'  : response.end,
-                                        'color' : response.color
+                                    $('#appointmentModal').modal('hide');
+                                    calendar.addEvent({
+                                        title: response.title,
+                                        start: response.start,
+                                        end: response.end,
+                                        color: response.color
                                     });
                                 },
                                 error:function(error)
